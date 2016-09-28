@@ -54,9 +54,7 @@ RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSI
 
 COPY ./config/ /tmp/config
 COPY ./docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
-RUN cp /tmp/config/site_config.json /home/$FRAPPE_USER/frappe-bench/sites/common_site_config.json && \
-    cp /tmp/config/site_config.json /home/$FRAPPE_USER/frappe-bench/sites/localhost/site_config.json && \
-    cp /tmp/config/apps.txt /home/$FRAPPE_USER/frappe-bench/sites/apps.txt && \
+RUN cp /tmp/config/apps.txt /home/$FRAPPE_USER/frappe-bench/sites/apps.txt && \
     sudo chmod +x /usr/local/bin/docker-entrypoint.sh
 
 VOLUME /home/$FRAPPE_USER/frappe-bench/logs
@@ -64,5 +62,20 @@ VOLUME /home/$FRAPPE_USER/frappe-bench/sites/localhost
 
 WORKDIR /home/$FRAPPE_USER/frappe-bench
 
-ENTRYPOINT ["docker-entrypoint.sh"]
+ENV ADMIN_PASSWORD=frappe \
+    DB_HOST=db \
+    DB_NAME=frappe \
+    DB_PASSWORD=frappe \
+    DB_USER=frappe \
+    MAIL_LOGIN= \
+    MAIL_PASSWORD= \
+    MAIL_PORT= \
+    MAIL_SERVER= \
+    REDIS_CACHE_URL=redis-cache \
+    REDIS_QUEUE_URL=redis-queue \
+    REDIS_SOCKETIO_URL=redis-socketio \
+    ROOT_PASSWORD=root \
+    USE_SSL=false
+
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
 CMD ["app"]

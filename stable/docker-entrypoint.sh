@@ -1,7 +1,6 @@
 #!/bin/sh
 
 NODE_TYPE=$1
-DB_HOST=${DB_HOST:=db}
 
 bench use localhost
 
@@ -15,11 +14,20 @@ TASK=$(case "$NODE_TYPE" in
   (*) ;;
 esac)
 
+# setup site_config.json
+dockerize -template /tmp/config/site_config.json.tmpl:/home/$FRAPPE_USER/frappe-bench/sites/common_site_config.json \
+          -template /tmp/config/site_config.json.tmpl:/home/$FRAPPE_USER/frappe-bench/sites/localhost/site_config.json \
+          true
+
+# set permissions on config files
+chmod 440 /home/$FRAPPE_USER/frappe-bench/sites/common_site_config.json \
+          /home/$FRAPPE_USER/frappe-bench/sites/localhost/site_config.json
+
 if [ ${NODE_TYPE} = "app" ]; then
 
   echo 'Waiting for DB to start up'
 
-  dockerize -wait tcp://db:3306 -timeout 120s
+  dockerize -wait tcp://$DB_HOST:3306 -timeout 120s
 
   # su frappe -c "bench --site site.local doctor > /dev/null 2>&1"
   cd /home/frappe/frappe-bench

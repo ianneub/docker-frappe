@@ -1,0 +1,23 @@
+{
+  "admin_password": "{{ .Env.ADMIN_PASSWORD}}",
+  "db_host": "{{ .Env.DB_HOST }}",
+  "db_name": "{{ .Env.DB_NAME }}",
+  "db_password": "{{ .Env.DB_PASSWORD }}",
+  "db_user": "{{ .Env.DB_USER }}",
+  "deny_multiple_logins": false,
+  "disable_website_cache": false,
+  "dns_multitenant": false,
+  "host_name": "localhost",
+  "logging": "1",
+  "mail_login": "{{ .Env.MAIL_LOGIN }}",
+  "mail_password": "{{ .Env.MAIL_PASSWORD }}",
+  "mail_port": "{{ .Env.MAIL_PORT }}",
+  "mail_server": "{{ .Env.MAIL_SERVER }}",
+  "mute_emails": false,
+  "redis_cache": "redis://{{ .Env.REDIS_CACHE_URL }}",
+  "redis_queue": "redis://{{ .Env.REDIS_QUEUE_URL }}",
+  "redis_socketio": "redis://{{ .Env.REDIS_SOCKETIO_URL }}",
+  "root_password": "{{ .Env.ROOT_PASSWORD }}",
+  "serve_default_site": true,
+  "use_ssl": {{ .Env.USE_SSL }}
+}
