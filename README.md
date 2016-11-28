@@ -2,4 +2,4 @@
 
 Frappe, ERPNext, Schools - Dockerized
 
-# This project is no longer maintained.
+** This project is no longer maintained. **
